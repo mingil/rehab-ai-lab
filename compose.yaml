@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ai-engine:
+    image: quay.io/jupyter/pytorch-notebook:latest
+    container_name: rehab-ai-engine
+    ports:
+      - "10000:8888"
+    volumes:
+      - /volume1/docker/rehab-ai-lab:/home/jovyan/work
+    environment:
+      - JUPYTER_TOKEN=rehab1234
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+      # 👇 [수정됨] 따옴표 없는 깨끗한 옵션
+      - CHOWN_HOME=yes
+      - CHOWN_HOME_OPTS=-R
+    user: root
+    working_dir: /home/jovyan/work
+    restart: on-failure:5
